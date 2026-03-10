@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="sv">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,61 +12,65 @@
       <!--Lägg till hero-img som bakgrundsbild-->
     </header>
 
-    <section>
-      <input type="text" placeholder="Sök plats...">
-      <!--Lägg til en sökikon som bakgrundsbild-->
-    </section>
+    <main>
+      <section>
+        <form>
+          <input type="text" placeholder="Sök plats..." id="user-input">
+          <button id="knapp-sök">Sök</button>
+          <!--Lägg til en sökikon som bakgrundsbild-->
+        </form>
+      </section>
 
-    <section id="map-section">
+      <div id="map"></div>
+      <p id="felmeddelande"></p>
 
-    </section>
-
-    <section>
-      <article>
-        <h2>Idag</h2>
-
+      <section>
         <article>
-          <div>
-            <p class="väder-stad"></p>
-            <p class="väder-ort"></p>
-          </div>
+          <h2>Idag</h2>
 
-          <p class="väder-temp"></p>
+          <article>
+            <div>
+              <p class="väder-stad"></p>
+              <p class="väder-ort"></p>
+            </div>
 
-          <div class="väder-ikon"></div>
-        </article>
-      </article>
+            <p class="väder-temp"></p>
 
-      <article>
-        <div>
-          <h2>Kommande dagar</h2>
-          <img src="/ikoner/pil.svg">
-        </div>
-
-        <article>
-          <div>
-            <p class="väder-stad"></p>
-            <p class="väder-ort"></p>
-          </div>
-
-          <p class="väder-temp"></p>
-
-          <div class="väder-ikon"></div>
+            <div class="väder-ikon"></div>
+          </article>
         </article>
 
         <article>
           <div>
-            <p class="väder-stad"></p>
-            <p class="väder-ort"></p>
+            <h2>Kommande dagar</h2>
+            <img src="/ikoner/pil.svg">
           </div>
 
-          <p class="väder-temp"></p>
+          <article>
+            <div>
+              <p class="väder-stad"></p>
+              <p class="väder-ort"></p>
+            </div>
 
-          <div class="väder-ikon"></div>
+            <p class="väder-temp"></p>
+
+            <div class="väder-ikon"></div>
+          </article>
+
+          <article>
+            <div>
+              <p class="väder-stad"></p>
+              <p class="väder-ort"></p>
+            </div>
+
+            <p class="väder-temp"></p>
+
+            <div class="väder-ikon"></div>
+          </article>
         </article>
-      </article>
-    </section>
+      </section>
+    </main>
 
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/js/main.js"></script>
   </body>
 </html>
