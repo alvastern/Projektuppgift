@@ -9,6 +9,7 @@ let errorP = document.getElementById("felmeddelande");
 
 let weatherCity = document.querySelector(".väder-stad");
 let weatherTemp = document.querySelector(".väder-temp");
+let weatherPrognos = document.querySelectorAll(".väderprognos");
 
 function showMap(lat, lon, zoom = 13) {
     const iframeSrc = "https://www.openstreetmap.org/export/embed.html?layer=mapnik&marker=" + lat + "%2C" + lon + "&zoom=" + zoom;
@@ -54,7 +55,7 @@ mapForm.addEventListener("submit", async (event) => {
             throw new Error("Ogiltiga koordinater.");
         }
 
-        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&timezone=auto`;
+        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=4`;
         const weatherResponse = await fetch(weatherUrl);
 
         if (!weatherResponse.ok) {
@@ -62,6 +63,9 @@ mapForm.addEventListener("submit", async (event) => {
         }
 
         const weatherData = await weatherResponse.json();
+        const prognosDatum = weatherData.daily.time;
+        const prognosMaxtemp = weatherData.daily.temperature_2m_max;
+        const prognosMintemp = weatherData.daily.temperature_2m_min;
 
         if (!weatherData.current || weatherData.current.temperature_2m === undefined) {
             throw new Error("Kunde inte läsa väderdata.");
@@ -71,6 +75,19 @@ mapForm.addEventListener("submit", async (event) => {
 
         weatherCity.textContent = data[0].display_name;
         weatherTemp.textContent = `${temperature}°C`;
+
+        weatherPrognos.forEach((card, index) => {
+            const dayIndex = index + 1;
+
+            const veckodag = card.querySelector(".veckodag");
+            const temp = card.querySelector(".väder-temp");
+
+            veckodag.textContent = new Date(prognosDatum[dayIndex]).toLocaleDateString("sv-SE", {
+                weekday: "long"
+            });
+            
+            temp.textContent = `${prognosMaxtemp[dayIndex]}°C / ${prognosMintemp[dayIndex]}°C`;
+        });
 
         showMap(lat, lon, 13);
 
