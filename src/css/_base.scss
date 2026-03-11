@@ -1,0 +1,18 @@
+$primary-font: Verdana, sans-serif;
+$text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+body {
+    font-family: $primary-font;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+header {
+    background-image: url("/src/img/sky-clouds.webp");
+    background-size: cover;
+    background-position: center;
+    padding: 50vh 0vw 5vh 10vw;
+    box-shadow: $box-shadow;
+}

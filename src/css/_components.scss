@@ -1,0 +1,27 @@
+@use "./base" as *;
+
+#user-input {
+    margin: 5vh 1.5vw 0 10vw;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    border: 0.5px solid #d9d9d9;;
+    background-color: white;
+    box-shadow: $box-shadow;
+    width: 15vw;
+}
+
+#knapp-sök {
+    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+    background-color: white;
+    border: #d9d9d9 0.5px solid;
+    box-shadow: $box-shadow;
+    background-color:cornflowerblue;
+    font-weight: bold;
+    font-size: 1.25rem;
+    border-radius: 1rem;
+}
+
+#knapp-sök:hover {
+    // Här kan det skapas en animering
+}

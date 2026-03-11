@@ -1,3 +1,5 @@
+@use "./base" as *;
+
 // Drop down meny för kommande dagar
 #kommande-dagar-container {
   display: none;
@@ -5,4 +7,10 @@
 
 #kommande-dagar-container.open {
   display: block;
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 4rem;
+    text-shadow: $text-shadow;
 }
