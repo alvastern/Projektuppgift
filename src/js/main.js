@@ -16,11 +16,8 @@ let prognosContainer = document.getElementById("kommande-dagar-container");
 
 // Funktion för att visa eller dölja prognosen för kommande dagar
 toggleButton.addEventListener("click", () => {
-    if (prognosContainer.style.display === "none") {
-        prognosContainer.style.display = "block";
-    } else {
-        prognosContainer.style.display = "none";
-    }
+    prognosContainer.classList.toggle("open");
+    toggleButton.classList.toggle("rotated");
 });
 
 function showMap(lat, lon, zoom = 13) {

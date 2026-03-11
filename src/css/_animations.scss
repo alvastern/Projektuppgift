@@ -1,0 +1,7 @@
+#pil-kommande-dagar {
+    transition: transform 0.3s ease;
+}
+
+#pil-kommande-dagar.rotated {
+    transform: rotate(180deg);
+}

@@ -1,4 +1,8 @@
 // Drop down meny för kommande dagar
 #kommande-dagar-container {
-    display: none;
+  display: none;
+}
+
+#kommande-dagar-container.open {
+  display: block;
 }
