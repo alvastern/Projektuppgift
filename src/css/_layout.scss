@@ -14,3 +14,48 @@ h1 {
     font-size: 4rem;
     text-shadow: $text-shadow;
 }
+
+#rubrik-idag {
+  margin: 5vh 10vw 2vh 10vw;
+}
+
+#meny-kommande-dagar {
+  margin: 5vh 10vw 0 10vw;
+  display: flex;
+  justify-content: space-between;
+  width: 35vw;
+  background-color: white;
+  border:#d9d9d9 0.5px solid;
+  box-shadow: $box-shadow;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+
+#kommande-dagar-container {
+  background-color: #d9d9d9;
+  width: 36.75vw;
+  margin: 0 10vw 5vh 10vw;
+  padding: 0.5vh 0 5vh 0;
+}
+
+// Stylign för väderkort
+@mixin visa-väder {
+  display: flex;
+  justify-content: space-between;
+  border: #d9d9d9 0.5px solid;
+  box-shadow: $box-shadow;
+  padding: 0.5rem 1rem;
+  background-color: white;
+}
+
+.väder-kort {
+  @include visa-väder;
+  width: 35vw;
+  margin: 0 10vw 5vh 10vw;
+}
+
+.väderprognos {
+  @include visa-väder;
+  width: 25vw;
+  margin: 5vh 0 0 5vw;
+}
