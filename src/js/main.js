@@ -11,6 +11,18 @@ let weatherCity = document.querySelector(".väder-stad");
 let weatherTemp = document.querySelector(".väder-temp");
 let weatherPrognos = document.querySelectorAll(".väderprognos");
 
+let toggleButton = document.getElementById("pil-kommande-dagar");
+let prognosContainer = document.getElementById("kommande-dagar-container");
+
+// Funktion för att visa eller dölja prognosen för kommande dagar
+toggleButton.addEventListener("click", () => {
+    if (prognosContainer.style.display === "none") {
+        prognosContainer.style.display = "block";
+    } else {
+        prognosContainer.style.display = "none";
+    }
+});
+
 function showMap(lat, lon, zoom = 13) {
     const iframeSrc = "https://www.openstreetmap.org/export/embed.html?layer=mapnik&marker=" + lat + "%2C" + lon + "&zoom=" + zoom;
     map.innerHTML = `<iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="${iframeSrc}"></iframe>`;
@@ -85,7 +97,7 @@ mapForm.addEventListener("submit", async (event) => {
             veckodag.textContent = new Date(prognosDatum[dayIndex]).toLocaleDateString("sv-SE", {
                 weekday: "long"
             });
-            
+
             temp.textContent = `${prognosMaxtemp[dayIndex]}°C / ${prognosMintemp[dayIndex]}°C`;
         });
 
