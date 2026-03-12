@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+import "../css/main.scss";
+
+// Användaren kan söka på en plats och få upp den på en karta
+let mapForm = document.querySelector("main form");
+let userInput = document.getElementById("user-input");
+let map = document.getElementById("map");
+let errorP = document.getElementById("felmeddelande");
+
+let weatherCity = document.querySelector(".väder-stad");
+let weatherTemp = document.querySelector(".väder-temp");
+let weatherPrognos = document.querySelectorAll(".väderprognos");
+
+let toggleButton = document.getElementById("pil-kommande-dagar");
+let prognosContainer = document.getElementById("kommande-dagar-container");
+
+/**
+ * Visar eller döljer prognosen för kommande dagar
+ * och roterar pil-ikonen.
+ */
+toggleButton.addEventListener("click", () => {
+    prognosContainer.classList.toggle("open");
+    toggleButton.classList.toggle("rotated");
+});
+
+/**
+ * Visar en karta och en markerad position som användaren har sökt på
+ * @param {number} lat - Latitud för platsen
+ * @param {number} lon - Longitud för platsen
+ * @param {number} zoom - Zoomnivå för kartan
+ */
+function showMap(lat, lon, zoom = 13) {
+    const iframeSrc = "https://www.openstreetmap.org/export/embed.html?layer=mapnik&amp;marker=" + lat + "%2C" + lon + "&amp;zoom=" + zoom;
+    map.innerHTML = `&lt;iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="${iframeSrc}">&lt;/iframe>`;
+}
+
+showMap(59.3293, 18.0686, 10); // Det ska dyka upp en standardkarta även när användaren inte har sökt på en plats
+
+/**
+ * Hanterar sökning av plats, hämtar väderdata
+ * och uppdaterar kartan och prognosen.
+ * @param {Event} event - Formulärets submit-event
+ */
+mapForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    errorP.textContent = "";
+
+    try {
+        const query = userInput.value.trim();
+
+        if (query === "") {
+            throw new Error("Skriv in en plats.");
+        }
+
+        const url = "https://nominatim.openstreetmap.org/search?format=json&amp;limit=1&amp;q=" + encodeURIComponent(query);
+
+        const response = await fetch(url, {
+            headers: {
+                "Accept-Language": "sv",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Ingen plats hittades, prova igen.");
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+            throw new Error("Ingen plats hittades, prova igen.");
+        }
+
+        const lat = Number(data[0].lat);
+        const lon = Number(data[0].lon);
+
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+            throw new Error("Ogiltiga koordinater.");
+        }
+
+        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&amp;longitude=${lon}&amp;current=temperature_2m,precipitation&amp;daily=temperature_2m_max,temperature_2m_min,precipitation_sum&amp;timezone=auto&amp;forecast_days=4`;
+        const weatherResponse = await fetch(weatherUrl);
+
+        if (!weatherResponse.ok) {
+            throw new Error("Kunde inte hämta väderdata, prova igen.");
+        }
+
+        const weatherData = await weatherResponse.json();
+        const prognosDatum = weatherData.daily.time;
+        const prognosMaxtemp = weatherData.daily.temperature_2m_max;
+        const prognosMintemp = weatherData.daily.temperature_2m_min;
+        const precipitation = weatherData.current.precipitation;
+        const prognosRegn = weatherData.daily.precipitation_sum;
+
+        if (!weatherData.current || weatherData.current.temperature_2m === undefined) {
+            throw new Error("Kunde inte läsa väderdata.");
+        }
+
+        const temperature = weatherData.current.temperature_2m;
+
+        weatherCity.textContent = data[0].display_name;
+        weatherTemp.textContent = `${temperature}°C | Regn: ${precipitation} mm`;
+
+        weatherPrognos.forEach((card, index) => {
+            const dayIndex = index + 1;
+
+            const veckodag = card.querySelector(".veckodag");
+            const temp = card.querySelector(".väder-temp");
+
+            veckodag.textContent = new Date(prognosDatum[dayIndex]).toLocaleDateString("sv-SE", {
+                weekday: "long"
+            });
+
+            temp.textContent = `${prognosMaxtemp[dayIndex]}°C / ${prognosMintemp[dayIndex]}°C | Regn: ${prognosRegn[dayIndex]} mm`;
+        });
+
+        showMap(lat, lon, 13);
+
+    } catch (err) {
+        errorP.textContent = err.message;
+        console.error(err);
+    }
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#showMap">showMap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Mar 12 2026 17:10:36 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
