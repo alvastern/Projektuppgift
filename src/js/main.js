@@ -64,7 +64,7 @@ mapForm.addEventListener("submit", async (event) => {
             throw new Error("Ogiltiga koordinater.");
         }
 
-        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=4`;
+        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto&forecast_days=4`;
         const weatherResponse = await fetch(weatherUrl);
 
         if (!weatherResponse.ok) {
@@ -75,6 +75,8 @@ mapForm.addEventListener("submit", async (event) => {
         const prognosDatum = weatherData.daily.time;
         const prognosMaxtemp = weatherData.daily.temperature_2m_max;
         const prognosMintemp = weatherData.daily.temperature_2m_min;
+        const precipitation = weatherData.current.precipitation;
+        const prognosRegn = weatherData.daily.precipitation_sum;
 
         if (!weatherData.current || weatherData.current.temperature_2m === undefined) {
             throw new Error("Kunde inte läsa väderdata.");
@@ -83,7 +85,7 @@ mapForm.addEventListener("submit", async (event) => {
         const temperature = weatherData.current.temperature_2m;
 
         weatherCity.textContent = data[0].display_name;
-        weatherTemp.textContent = `${temperature}°C`;
+        weatherTemp.textContent = `${temperature}°C | Regn: ${precipitation} mm`;
 
         weatherPrognos.forEach((card, index) => {
             const dayIndex = index + 1;
@@ -95,7 +97,7 @@ mapForm.addEventListener("submit", async (event) => {
                 weekday: "long"
             });
 
-            temp.textContent = `${prognosMaxtemp[dayIndex]}°C / ${prognosMintemp[dayIndex]}°C`;
+            temp.textContent = `${prognosMaxtemp[dayIndex]}°C / ${prognosMintemp[dayIndex]}°C | Regn: ${prognosRegn[dayIndex]} mm`;
         });
 
         showMap(lat, lon, 13);

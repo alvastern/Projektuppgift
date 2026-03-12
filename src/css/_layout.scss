@@ -59,3 +59,22 @@ h1 {
   width: 25vw;
   margin: 5vh 0 0 5vw;
 }
+
+@media (max-width: 1024px) {
+  .väder-kort {
+    width: 75vw;
+  }
+
+  #kommande-dagar-container {
+    width: 78.5vw;
+  }
+
+  #meny-kommande-dagar {
+    width: 75vw;
+  }
+
+  .väderprognos {
+    width: 65vw;
+    margin: 5vh 0 0 5vw;
+  }
+}
