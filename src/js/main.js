@@ -14,20 +14,33 @@ let weatherPrognos = document.querySelectorAll(".väderprognos");
 let toggleButton = document.getElementById("pil-kommande-dagar");
 let prognosContainer = document.getElementById("kommande-dagar-container");
 
-// Funktion för att visa eller dölja prognosen för kommande dagar
+/**
+ * Visar eller döljer prognosen för kommande dagar
+ * och roterar pil-ikonen.
+ */
 toggleButton.addEventListener("click", () => {
     prognosContainer.classList.toggle("open");
     toggleButton.classList.toggle("rotated");
 });
 
+/**
+ * Visar en karta och en markerad position som användaren har sökt på
+ * @param {number} lat - Latitud för platsen
+ * @param {number} lon - Longitud för platsen
+ * @param {number} zoom - Zoomnivå för kartan
+ */
 function showMap(lat, lon, zoom = 13) {
     const iframeSrc = "https://www.openstreetmap.org/export/embed.html?layer=mapnik&marker=" + lat + "%2C" + lon + "&zoom=" + zoom;
     map.innerHTML = `<iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="${iframeSrc}"></iframe>`;
 }
 
-// Standardkarta när sidan laddas
-showMap(59.3293, 18.0686, 10);
+showMap(59.3293, 18.0686, 10); // Det ska dyka upp en standardkarta även när användaren inte har sökt på en plats
 
+/**
+ * Hanterar sökning av plats, hämtar väderdata
+ * och uppdaterar kartan och prognosen.
+ * @param {Event} event - Formulärets submit-event
+ */
 mapForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     errorP.textContent = "";
