@@ -1,7 +1,7 @@
 "use strict";
 import "../css/main.scss";
 
-// Användaren kan söka på en plats och få upp den på en karta
+// DOM-element som används i JavaScript
 let mapForm = document.querySelector("main form");
 let userInput = document.getElementById("user-input");
 let map = document.getElementById("map");
@@ -45,6 +45,7 @@ mapForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     errorP.textContent = "";
 
+    // Användning av try-catch för att hantera olika fel som kan uppstå under sökningen och hämtningen av data
     try {
         const query = userInput.value.trim();
 
@@ -54,6 +55,7 @@ mapForm.addEventListener("submit", async (event) => {
 
         const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(query);
 
+        // Användning av fetch och async/await för att hämta data från API:erna
         const response = await fetch(url, {
             headers: {
                 "Accept-Language": "sv",
@@ -113,7 +115,7 @@ mapForm.addEventListener("submit", async (event) => {
             temp.textContent = `${prognosMaxtemp[dayIndex]}°C / ${prognosMintemp[dayIndex]}°C | Regn: ${prognosRegn[dayIndex]} mm`;
         });
 
-        showMap(lat, lon, 13);
+        showMap(lat, lon, 13); // Uppdaterar kartan med den nya platsen och användarens valda position
 
     } catch (err) {
         errorP.textContent = err.message;
