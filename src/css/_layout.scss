@@ -24,6 +24,10 @@ h1 {
   margin: 5vh 10vw 2vh 10vw;
 }
 
+#rubrik-diagram {
+  font-size: 1.25rem;
+}
+
 #meny-kommande-dagar {
   margin: 5vh 10vw 0 10vw;
   display: flex;
@@ -41,6 +45,16 @@ h1 {
   width: 36.75vw;
   margin: 0 10vw 5vh 10vw;
   padding: 0.5vh 0 5vh 0;
+}
+
+.chart-container {
+  width: 30vw;
+  margin: 5vh 10vw;
+}
+
+#weatherChart {
+  width: 100%;
+  height: auto;
 }
 
 // Stylign för väderkort

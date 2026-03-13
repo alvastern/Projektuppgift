@@ -10,7 +10,6 @@
   <body>
     <header id="header">
       <h1>Väder</h1>
-      <!--Lägg till hero-img som bakgrundsbild-->
     </header>
 
     <main>
@@ -18,7 +17,6 @@
         <form>
           <input type="text" placeholder="Sök plats..." id="user-input">
           <button id="knapp-sök">Sök</button>
-          <!--Lägg til en sökikon som bakgrundsbild-->
         </form>
       </section>
 
@@ -85,6 +83,11 @@
             </article>
           </div>
         </article>
+      </section>
+
+      <section class="chart-container">
+        <h2 id="rubrik-diagram">Diagram över dagens temperatur</h2>
+        <canvas id="weatherChart"></canvas>
       </section>
 
       <section id="sektion-dokumentation">

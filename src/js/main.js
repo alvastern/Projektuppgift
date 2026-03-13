@@ -1,5 +1,6 @@
 "use strict";
 import "../css/main.scss";
+import Chart from 'chart.js/auto';
 
 // DOM-element som används i JavaScript
 let mapForm = document.querySelector("main form");
@@ -121,4 +122,15 @@ mapForm.addEventListener("submit", async (event) => {
         errorP.textContent = err.message;
         console.error(err);
     }
+
+    new Chart(document.getElementById("weatherChart"), {
+        type: 'line',
+        data: {
+            labels: ["10:00", "11:00", "12:00"],
+            datasets: [{
+            label: "Temperatur °C",
+            data: [12, 14, 15]
+            }]
+        }
+    });
 });
