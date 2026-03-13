@@ -123,6 +123,7 @@ mapForm.addEventListener("submit", async (event) => {
         console.error(err);
     }
 
+    // Skapar ett linjediagram med Chart.js som visar temperatur över dagen
     new Chart(document.getElementById("weatherChart"), {
         type: 'line',
         data: {
